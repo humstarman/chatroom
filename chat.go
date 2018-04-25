@@ -14,7 +14,7 @@ var (
     entering = make(chan client) 
     leaving = make(chan client) 
     messages = make(chan string)
-    portFlag = flag.String("port","8080","the working port")
+    portFlag = flag.String("port","8000","the working port")
 )
 
 func broadcaster() {
