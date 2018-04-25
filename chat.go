@@ -5,6 +5,7 @@ import(
     "net"
     "log"
     "bufio"
+    "flag"
 )
 
 type client chan<- string
@@ -13,6 +14,7 @@ var (
     entering = make(chan client) 
     leaving = make(chan client) 
     messages = make(chan string)
+    portFlag = flag.String("port","8080","the working port")
 )
 
 func broadcaster() {
@@ -60,7 +62,9 @@ func clientWriter(conn net.Conn,ch <-chan string){
 }
 
 func main() {
-    listener,err := net.Listen("tcp","0.0.0.0:8000")
+    flag.Parse()
+    sock := fmt.Sprintf("0.0.0.0:%s",*portFlag)
+    listener,err := net.Listen("tcp",sock)
     if err != nil {
         log.Fatal(err)
     }
